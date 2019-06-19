@@ -38,7 +38,8 @@ sub format_duration {
         ("${y}y") x !!$y,
         ("${m}mo") x !!$m,
         ("${d}d") x !!$d,
-        sprintf("%02d:%02d:%02d%s", $H, $M, $S, $ns ? sprintf(".%03d", $ns/1e6))
+        sprintf("%02d:%02d:%02d%s", $H, $M, $S,
+                $ns ? sprintf(".%03d", $ns/1e6) : "")
     );
 }
 
