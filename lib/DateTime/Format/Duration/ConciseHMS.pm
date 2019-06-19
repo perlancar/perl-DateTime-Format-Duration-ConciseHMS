@@ -33,13 +33,19 @@ sub format_duration {
 
     $d += $w * 7;
 
+    my $has_date = $y || $m || $w || $d;
+    my $has_time = $H || $M || $S;
+
     join(
         " ",
         ("${y}y") x !!$y,
         ("${m}mo") x !!$m,
         ("${d}d") x !!$d,
-        sprintf("%02d:%02d:%02d%s", $H, $M, $S,
-                $ns ? sprintf(".%03d", $ns/1e6) : "")
+        (
+            sprintf("%02d:%02d:%02d%s", $H, $M, $S,
+                    $ns ? sprintf(".%03d", $ns/1e6) : "")
+        ) x !!($has_time || !$has_date),
+
     );
 }
 
@@ -64,6 +70,7 @@ months), "3d" (3 days) while duration of hours/minutes/seconds will be
 represented using hh:mm:ss e.g. 04:05:06. Examples:
 
  00:00:00
+ 1d
  3y 5mo 00:00:10.123
 
 
